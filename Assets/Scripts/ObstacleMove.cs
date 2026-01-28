@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class ObstacleMove : MonoBehaviour
 {
+    private GameLogicScript _gameLogic;
     public float speed = 5f;
-    private float deadZone = -15f;
+    private float gameObjectCleanupPos = -15f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        _gameLogic = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<GameLogicScript>();
     }
 
     // Update is called once per frame
@@ -15,9 +16,17 @@ public class ObstacleMove : MonoBehaviour
     {
         transform.position += Vector3.left * speed * Time.deltaTime;
 
-        if(transform.position.x < deadZone)
+        if(transform.position.x < gameObjectCleanupPos)
         {
             Destroy(gameObject);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerShip"))
+        {
+            _gameLogic.GameOver();
         }
     }
 }

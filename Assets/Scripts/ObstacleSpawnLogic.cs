@@ -6,6 +6,9 @@ public class ObstacleSpawnLogic : MonoBehaviour
     public float SpawnInterval = 2;
     public float timer = 0f;
 
+    private float maxObstacleHeight = 2.8f;
+    private float minObstacleHeight = -2.8f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,6 +28,7 @@ public class ObstacleSpawnLogic : MonoBehaviour
 
     void SpawnObstacle()
     {
-        Instantiate(obstacle, transform.position, Quaternion.identity);
+        Vector3 randomPosition = new Vector3(transform.position.x, Random.Range(minObstacleHeight, maxObstacleHeight), transform.position.z);
+        Instantiate(obstacle, randomPosition, Quaternion.identity);
     }
 }
